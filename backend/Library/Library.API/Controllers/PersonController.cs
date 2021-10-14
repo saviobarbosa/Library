@@ -8,7 +8,7 @@ namespace Library.API.Controllers
     [ApiVersion("1")]
     [ApiController]
     [Route("api/[controller]/v{version:apiVersion}")]
-    public class PersonController : Controller
+    public class PersonController : ControllerBase
     {
         private readonly ILogger<PersonController> _logger;
         private IPersonBusiness _personBusiness;
@@ -54,7 +54,7 @@ namespace Library.API.Controllers
             return Ok(_personBusiness.Create(person));
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult Delete(long id)
         {
             _personBusiness.Delete(id);
