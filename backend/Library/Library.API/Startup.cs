@@ -1,12 +1,14 @@
 using Library.API.Models.Context;
-using Library.API.Services;
-using Library.API.Services.Implementations;
+using Library.API.Business;
+using Library.API.Business.Implementations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Library.API.Repository;
+using Library.API.Repository.Implementations;
 
 namespace Library.API
 {
@@ -30,7 +32,8 @@ namespace Library.API
             //Versioning API
             services.AddApiVersioning();
             
-            services.AddScoped<IPersonService, PersonServiceImplementation>();
+            services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
+            services.AddScoped<IPersonRepository, PersonRepositoryImplementation>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

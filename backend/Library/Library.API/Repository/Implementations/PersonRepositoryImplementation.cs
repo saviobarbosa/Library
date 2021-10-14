@@ -3,16 +3,14 @@ using Library.API.Models.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace Library.API.Services.Implementations
+namespace Library.API.Repository.Implementations
 {
-    public class PersonServiceImplementation : IPersonService
+    public class PersonRepositoryImplementation : IPersonRepository
     {
         private readonly SqlServerContext _context;
 
-        public PersonServiceImplementation(SqlServerContext context)
+        public PersonRepositoryImplementation(SqlServerContext context)
         {
             _context = context;
         }
@@ -79,7 +77,7 @@ namespace Library.API.Services.Implementations
             }
         }
 
-        private bool Exists(long id)
+        public bool Exists(long id)
         {
             return _context.Persons.Any(p => p.Id == id);
         }

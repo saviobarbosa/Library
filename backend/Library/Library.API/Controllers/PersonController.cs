@@ -1,5 +1,5 @@
 ﻿using Library.API.Models;
-using Library.API.Services;
+using Library.API.Business;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -11,24 +11,24 @@ namespace Library.API.Controllers
     public class PersonController : Controller
     {
         private readonly ILogger<PersonController> _logger;
-        private IPersonService _personService;
+        private IPersonBusiness _personBusiness;
 
-        public PersonController(ILogger<PersonController> logger, IPersonService personService)
+        public PersonController(ILogger<PersonController> logger, IPersonBusiness personBusiness)
         {
             _logger = logger;
-            _personService = personService;
+            _personBusiness = personBusiness;
         }
 
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_personService.FindAll());
+            return Ok(_personBusiness.FindAll());
         }
 
         [HttpGet("{id}")]
         public IActionResult Get(long id)
         {
-            var person = _personService.FindByID(id);
+            var person = _personBusiness.FindByID(id);
 
             if(person == null)
             {
@@ -43,7 +43,7 @@ namespace Library.API.Controllers
         {
             if (person == null) return BadRequest();
 
-            return Ok(_personService.Create(person));
+            return Ok(_personBusiness.Create(person));
         }
 
         [HttpPut]
@@ -51,13 +51,13 @@ namespace Library.API.Controllers
         {
             if (person == null) return BadRequest();
 
-            return Ok(_personService.Create(person));
+            return Ok(_personBusiness.Create(person));
         }
 
         [HttpDelete]
         public IActionResult Delete(long id)
         {
-            _personService.Delete(id);
+            _personBusiness.Delete(id);
 
             return NoContent();
         }
