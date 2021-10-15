@@ -1,14 +1,14 @@
 ﻿using Library.API.Models;
-using Library.API.Repository;
+using Library.API.Repository.Generic;
 using System.Collections.Generic;
 
 namespace Library.API.Business.Implementations
 {
     public class PersonBusinessImplementation : IPersonBusiness
     {
-        private readonly IPersonRepository _repository;
+        private readonly IRepository<Person> _repository;
 
-        public PersonBusinessImplementation(IPersonRepository repository)
+        public PersonBusinessImplementation(IRepository<Person> repository)
         {
             _repository = repository;
         }

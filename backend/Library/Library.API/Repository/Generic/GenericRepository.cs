@@ -1,75 +1,81 @@
-﻿using Library.API.Models;
+﻿using Library.API.Models.Base;
 using Library.API.Models.Context;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace Library.API.Repository.Implementations
+namespace Library.API.Repository.Generic
 {
-    public class BookRepositoryImplementation : IBookRepository
+    public class GenericRepository<T> : IRepository<T> where T : BaseEntity
     {
         private readonly SqlServerContext _context;
+        private DbSet<T> dataset;
 
-        public BookRepositoryImplementation(SqlServerContext context)
+        public GenericRepository(SqlServerContext context)
         {
             _context = context;
+            dataset = _context.Set<T>();
         }
 
-        public List<Book> FindAll()
+        public List<T> FindAll()
         {
-            return _context.Books.ToList();
+            return dataset.ToList();
         }
 
-        public Book FindByID(long id)
+        public T FindByID(long id)
         {
-            return _context.Books.SingleOrDefault(p => p.Id == id);
+            return dataset.SingleOrDefault(t => t.Id == id);
         }
-
-        public Book Create(Book book)
+       
+        public T Create(T item)
         {
             try
             {
-                _context.Add(book);
+                dataset.Add(item);
                 _context.SaveChanges();
+
+                return item;
             }
             catch (Exception)
             {
                 throw;
             }
-
-            return book;
         }
 
-        public Book Update(Book book)
+        public T Update(T item)
         {
-            if (!Exists(book.Id)) return null;
+            if (!Exists(item.Id)) return null;
 
-            var result = _context.Books.SingleOrDefault(b => b.Equals(book.Id));
+            var result = dataset.SingleOrDefault(p => p.Id.Equals(item.Id));
             if (result != null)
             {
                 try
                 {
-                    _context.Entry(result).CurrentValues.SetValues(book);
+                    _context.Entry(result).CurrentValues.SetValues(result);
                     _context.SaveChanges();
+
+                    return result;
                 }
                 catch (Exception)
                 {
                     throw;
                 }
             }
-
-            return book;
+            else
+            {
+                return null;
+            }
         }
 
         public void Delete(long id)
         {
-            var result = _context.Books.SingleOrDefault(b => b.Id.Equals(id));
+            var result = dataset.SingleOrDefault(p => p.Id == id);
             if (result != null)
             {
                 try
                 {
-                    _context.Books.Remove(result);
+                    dataset.Remove(result);
                     _context.SaveChanges();
                 }
                 catch (Exception)
@@ -81,7 +87,7 @@ namespace Library.API.Repository.Implementations
 
         public bool Exists(long id)
         {
-            return _context.Books.Any(b => b.Id == id);
+            return dataset.Any(t => t.Id == id);
         }
     }
 }
