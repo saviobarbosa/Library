@@ -1,17 +1,14 @@
-﻿using Library.API.Models;
-using System;
+﻿using Library.API.Data.VO;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Library.API.Business
 {
     public interface IBookBusiness
     {
-        Book Create(Book book);
-        Book FindByID(long id);
-        List<Book> FindAll();
-        Book Update(Book book);
+        BookVO Create(BookVO book);
+        BookVO FindByID(long id);
+        List<BookVO> FindAll();
+        BookVO Update(BookVO book);
         void Delete(long id);
     }
 }
