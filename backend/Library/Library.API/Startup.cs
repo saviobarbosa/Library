@@ -13,6 +13,8 @@ using Microsoft.Data.SqlClient;
 using System.Collections.Generic;
 using Library.API.Repository.Generic;
 using Microsoft.Net.Http.Headers;
+using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Rewrite;
 
 namespace Library.API
 {
@@ -54,6 +56,22 @@ namespace Library.API
 
             //Versioning API
             services.AddApiVersioning();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1",
+                    new OpenApiInfo
+                    {
+                        Title = "Library API",
+                        Version = "v1",
+                        Description = "API RESTful developed in course 'REST API's RESTFul do 0 à Azure com ASP.NET Core 5 e Docker'",
+                        Contact = new OpenApiContact
+                        {
+                            Name = "Sávio Barbosa",
+                            Url = new Uri("https://github.com/saviobarbosa")
+                        }
+                    });
+            });
             
             services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
             services.AddScoped<IBookBusiness, BookBusinessImplementation>();
@@ -71,6 +89,18 @@ namespace Library.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c => 
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json",
+                    "Library API - v1");
+            });
+
+            var option = new RewriteOptions();
+            option.AddRedirect("^$", "swagger");
+            app.UseRewriter(option);
 
             app.UseAuthorization();
 

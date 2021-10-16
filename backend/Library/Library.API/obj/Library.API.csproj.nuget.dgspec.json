@@ -67,6 +67,10 @@
             "Serilog.Sinks.Console": {
               "target": "Package",
               "version": "[4.0.0, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.2.2, )"
             }
           },
           "imports": [

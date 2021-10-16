@@ -3,6 +3,7 @@ using Library.API.Business;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Library.API.Data.VO;
+using System.Collections.Generic;
 
 namespace Library.API.Controllers
 {
@@ -21,12 +22,15 @@ namespace Library.API.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType((200), Type = typeof(List<PersonVO>))]
         public IActionResult Get()
         {
             return Ok(_personBusiness.FindAll());
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType((200), Type = typeof(List<PersonVO>))]
+        [ProducesResponseType(404)]
         public IActionResult Get(long id)
         {
             var person = _personBusiness.FindByID(id);
@@ -40,6 +44,8 @@ namespace Library.API.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType((201), Type = typeof(List<PersonVO>))]
+        [ProducesResponseType(400)]
         public IActionResult Post([FromBody] PersonVO person)
         {
             if (person == null) return BadRequest();
@@ -48,6 +54,8 @@ namespace Library.API.Controllers
         }
 
         [HttpPut]
+        [ProducesResponseType((200), Type = typeof(List<PersonVO>))]
+        [ProducesResponseType(400)]
         public IActionResult Put([FromBody] PersonVO person)
         {
             if (person == null) return BadRequest();
@@ -56,6 +64,7 @@ namespace Library.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
         public IActionResult Delete(long id)
         {
             _personBusiness.Delete(id);
