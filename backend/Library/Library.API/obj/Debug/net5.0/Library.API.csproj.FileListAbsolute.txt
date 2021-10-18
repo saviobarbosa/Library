@@ -70,3 +70,4 @@ C:\Desenvolvimento\Udemy\Library\backend\Library\Library.API\bin\Debug\net5.0\Mi
 C:\Desenvolvimento\Udemy\Library\backend\Library\Library.API\bin\Debug\net5.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Desenvolvimento\Udemy\Library\backend\Library\Library.API\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Desenvolvimento\Udemy\Library\backend\Library\Library.API\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Desenvolvimento\Udemy\Library\backend\Library\Library.API\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

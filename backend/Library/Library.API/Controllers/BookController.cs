@@ -1,5 +1,6 @@
 ﻿using Library.API.Business;
 using Library.API.Data.VO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ namespace Library.API.Controllers
     [ApiVersion("1")]
     [ApiController]
     [Route("api/[controller]/v{version:apiVersion}")]
+    [Authorize("Bearer")]
     public class BookController : ControllerBase
     {
         private readonly ILogger<BookController> _logger;

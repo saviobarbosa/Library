@@ -4,12 +4,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Library.API.Data.VO;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Library.API.Controllers
 {
     [ApiVersion("1")]
     [ApiController]
     [Route("api/[controller]/v{version:apiVersion}")]
+    [Authorize("Bearer")]
     public class PersonController : ControllerBase
     {
         private readonly ILogger<PersonController> _logger;
